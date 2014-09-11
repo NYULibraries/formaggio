@@ -1,5 +1,5 @@
 Capistrano::Configuration.instance(:must_exist).load do
-  after "deploy", "deploy:cleanup", "cache:tmp_clear"
+  after "deploy", "cache:tmp_clear"
   
   namespace :cache do
     desc "Clear rails cache"

@@ -1,6 +1,6 @@
 Capistrano::Configuration.instance(:must_exist).load do
   # Cleanup old deploys and set passenger symbolic link
-  after "deploy", "deploy:cleanup", "deploy:passenger_symlink"
+  after "deploy", "deploy:passenger_symlink"
   
   namespace :deploy do
     desc "Start Application"
