@@ -1,5 +1,5 @@
 module Nyulibraries
-  module Deploy
+  module Formaggio
     require 'yaml'
     require 'erb'
     require 'fileutils'

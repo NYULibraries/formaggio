@@ -1,11 +1,11 @@
 require 'spec_helper'
 module Nyulibraries
-  module Deploy
+  module Formaggio
     describe PumaConfig, "#initialize" do
       def dummy_path
         @dummy_path ||= File.expand_path("../../../dummy", __FILE__)
       end
-    
+
       it "returns correct settings based on config" do
         puma_config = PumaConfig.new('9292')
         puma_config.port.should eq('9292')

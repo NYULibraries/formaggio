@@ -5,8 +5,8 @@ require "nyulibraries/version"
 
 # Describe your gem and declare its dependencies:
 Gem::Specification.new do |s|
-  s.name        = "nyulibraries-deploy"
-  s.version     = Nyulibraries::Deploy::VERSION
+  s.name        = "nyulibraries-formaggio"
+  s.version     = Nyulibraries::Formaggio::VERSION
   s.authors     = ["Scot Dalton"]
   s.email       = ["scot.dalton@nyu.edu"]
   s.homepage    = "https://github.com/NYULibraries/nyulibraries-deploy"

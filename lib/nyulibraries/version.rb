@@ -1,5 +1,5 @@
 module Nyulibraries
-  module Deploy
-    VERSION = "3.2.5"
+  module Formaggio
+    VERSION = "1.0.0"
   end
 end

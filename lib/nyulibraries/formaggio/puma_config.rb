@@ -1,5 +1,5 @@
 module Nyulibraries
-  module Deploy
+  module Formaggio
     class PumaConfig
       attr_reader :port, :root, :env
 

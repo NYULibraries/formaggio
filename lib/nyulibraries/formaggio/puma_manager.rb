@@ -1,5 +1,5 @@
 module Nyulibraries
-  module Deploy
+  module Formaggio
     module PumaManager
 
       def self.puma_config(*args)

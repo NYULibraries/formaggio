@@ -3,7 +3,7 @@ require 'coveralls'
 Coveralls.wear!
 # Include the lib directory in the load path
 $: <<  "#{File.dirname(__FILE__)}/../lib"
-require 'nyulibraries-deploy'
+require 'nyulibraries-formaggio'
 
 # Mock for Rails
 # Since we only need these two functions to work, it seems like
@@ -12,7 +12,7 @@ module Rails
   def self.root
     "#{File.dirname(__FILE__)}/dummy"
   end
-  
+
   def self.env
     "test"
   end

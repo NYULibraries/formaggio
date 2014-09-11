@@ -1,5 +1,5 @@
 module Nyulibraries
-  module Deploy
+  module Formaggio
     require 'spec_helper'
     describe PumaManager do
     end
