@@ -3,7 +3,7 @@ require 'coveralls'
 Coveralls.wear!
 # Include the lib directory in the load path
 $: <<  "#{File.dirname(__FILE__)}/../lib"
-require 'nyulibraries-formaggio'
+require 'formaggio'
 
 # Mock for Rails
 # Since we only need these two functions to work, it seems like
