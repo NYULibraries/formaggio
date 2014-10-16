@@ -32,7 +32,7 @@ Capistrano::Configuration.instance(:must_exist).load do
           server deploy_server, :app, :web, :db, primary: primary_flag
         end
       else
-          server ENV['deploy_servers'], :app, :web, :db, :primary => true
+          server ENV['DEPLOY_SERVERS'], :app, :web, :db, :primary => true
       end
     end
 
