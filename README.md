@@ -155,6 +155,16 @@ Capistrano recipes to control puma. Uses this very gem's [rake tasks](#puma)
     # In your config/deploy.rb
     require 'formaggio/capistrano/server/puma'
 
+### Delayed Jobs
+
+Capistrano recipes to control DelayedJobs.
+
+  * `cap delayed_jobs:restart` - Start DelayedJobs.
+
+
+    # In your config/deploy.rb
+    require 'formaggio/capistrano/delayed_jobs'
+
 # Defaults
 
 We've taken the liberty to define a default recipe and default settings. Most of our apps won't need anything
