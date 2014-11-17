@@ -1,16 +1,16 @@
-[![Build Status](https://travis-ci.org/NYULibraries/nyulibraries-deploy.png?branch=master)](https://travis-ci.org/NYULibraries/nyulibraries-deploy)
-[![Dependency Status](https://gemnasium.com/NYULibraries/nyulibraries-deploy.png)](https://gemnasium.com/NYULibraries/nyulibraries-deploy)
-[![Code Climate](https://codeclimate.com/github/NYULibraries/nyulibraries-deploy.png)](https://codeclimate.com/github/NYULibraries/nyulibraries-deploy)
-[![Coverage Status](https://coveralls.io/repos/NYULibraries/nyulibraries-deploy/badge.png)](https://coveralls.io/r/NYULibraries/nyulibraries-deploy)
+[![Build Status](https://travis-ci.org/NYULibraries/formaggio.png?branch=master)](https://travis-ci.org/NYULibraries/formaggio)
+[![Dependency Status](https://gemnasium.com/NYULibraries/formaggio.png)](https://gemnasium.com/NYULibraries/formaggio)
+[![Code Climate](https://codeclimate.com/github/NYULibraries/formaggio.png)](https://codeclimate.com/github/NYULibraries/formaggio)
+[![Coverage Status](https://coveralls.io/repos/NYULibraries/formaggio/badge.png)](https://coveralls.io/r/NYULibraries/formaggio)
 
-# NYULibraries-Formaggio
+# Formaggio
 
 Formaggio works with Capistrano, Rake, and Figs to offer a common deploy schema for NYULibraries apps. Bundled with Formaggio are a set of common rake tasks for the NYU libraries, as well as a set of common Capistrano recipes mixed into a delicious default recipe. Capistrano recipes end up handling most of the Rake tasks, but they can be used independently. Using Figs give us the added benefit of being Railsless!
 
 # Gemfile
 
 ```
-gem "nyulibraries-formaggio", github: "NYULibraries/formaggio"
+gem "formaggio", github: "NYULibraries/formaggio"
 ```
 
 # Rake Tasks
@@ -20,15 +20,15 @@ Since the NYU Libraries uses the ERB in YAML files,
 we need a task to explicitly load the relevant settings (e.g. license key, app name) to newrelic.yml in the absence
 of a Rails environment. This is mostly for backwards compatibility, as going forward, we'll always be using Figs :bowtie:.
 
-    rake nyu:newrelic:set
-    rake nyu:newrelic:reset
+    rake formaggio:newrelic:set
+    rake formaggio:newrelic:reset
 
 ## Puma
 Start, stop, and restart tasks for the [Puma webserver](http://puma.io/).
 
-    rake nyu:puma:start[9292]
-    rake nyu:puma:restart[9292]
-    rake nyu:puma:stop[9292]
+    rake formaggio:puma:start[9292]
+    rake formaggio:puma:restart[9292]
+    rake formaggio:puma:stop[9292]
 
 # Capistrano Recipes
 
@@ -37,8 +37,8 @@ Start, stop, and restart tasks for the [Puma webserver](http://puma.io/).
 This provides recipes that allow us to precompile the assets (only if their were changes!) and to create a
 symlink for the assets.
 
-    # In your config/formaggio.rb
-    require 'nyulibraries/formaggio/capistrano/assets'
+    # In your config/deploy.rb
+    require 'formaggio/capistrano/assets'
 
 Easy, the asset precompilation will work automatically after the capistrano's `deploy:update_code` task, and the
 symlinking will work automatically before capistrano's `finalize_update`.
@@ -53,14 +53,14 @@ and hooks [`deploy:migrate`](https://github.com/capistrano/capistrano/blob/1fd63
 to run after it.
 
     # In your config/deploy.rb
-    require 'nyulibraries/formaggio/capistrano/bundler'
+    require 'formaggio/capistrano/bundler'
 
 ## Cache
 
 Clears rail cache!
 
     # In your config/deploy.rb
-    require 'nyulibraries/formaggio/capistrano/cache'
+    require 'formaggio/capistrano/cache'
 
 Or you can run `cap cache:tmp_clear`.
 
@@ -70,7 +70,7 @@ Loads up capistrano's [multistage](https://github.com/capistrano/capistrano/blob
 Thats it.
 
     # In your config/deploy.rb
-    require 'nyulibraries/formaggio/capistrano/multistage'
+    require 'formaggio/capistrano/multistage'
     # Same as
     require 'capistrano/ext/multistage
 
@@ -84,7 +84,7 @@ and `cap newrelic:set` runs the reset one. Also hooks New Relic's `newrelic:noti
 `deploy:update`.
 
     # In your config/deploy.rb
-    require 'nyulibraries/formaggio/capistrano/new_relic'
+    require 'formaggio/capistrano/new_relic'
 
 ## Rails Config
 
@@ -98,7 +98,7 @@ prints out the results of the first two `rails_config` tasks.
 This one is very important for NYULibraries!
 
     # In your config/deploy.rb
-    require 'nyulibraries/formaggio/capistrano/rails_config'
+    require 'formaggio/capistrano/rails_config'
 
 ## RVM
 
@@ -106,7 +106,7 @@ Loads up [rvm's capistrano](https://github.com/wayneeseguin/rvm/blob/master/lib/
 it on to run before `deploy`.
 
     # In your config/deploy.rb
-    require 'nyulibraries/formaggio/capistrano/rvm'
+    require 'formaggio/capistrano/rvm'
 
 ## Send Diff
 
@@ -114,7 +114,7 @@ Very new idea, trys to find the difference from the last two git tags and sends 
 recipient. Run using `cap send_diff:send_diff`.
 
     # In your config/deploy.rb
-    require 'nyulibraries/formaggio/capistrano/send_diff'
+    require 'formaggio/capistrano/send_diff'
 
 ## Tagging
 
@@ -123,7 +123,7 @@ Tags the deployed app with a prespecified tagging convention.
 `cap tagging:deploy` will create the tag and deploy it.
 
     # In your config/deploy.rb
-    require 'nyulibraries/formaggio/capistrano/tagging'
+    require 'formaggio/capistrano/tagging'
 
 ## Server
 
@@ -140,7 +140,7 @@ Capistrano recipes to control passenger.
 
 
     # In your config/deploy.rb
-    require 'nyulibraries/formaggio/capistrano/server/passenger'
+    require 'formaggio/capistrano/server/passenger'
 
 
 ### Puma
@@ -153,7 +153,7 @@ Capistrano recipes to control puma. Uses this very gem's [rake tasks](#puma)
 
 
     # In your config/deploy.rb
-    require 'nyulibraries/formaggio/capistrano/server/puma'
+    require 'formaggio/capistrano/server/puma'
 
 # Defaults
 
@@ -161,28 +161,28 @@ We've taken the liberty to define a default recipe and default settings. Most of
 past defaults, but if there are small changes you can easily override them.
 
     # In your config/deploy.rb
-    require 'nyulibraries/formaggio/capistrano'
+    require 'formaggio/capistrano'
 
-This will load the [default attributes](https://github.com/NYULibraries/nyulibraries-deploy/blob/development-deploy/lib/nyulibraries/deploy/capistrano/default_attributes.rb),
-with a [default recipe](https://github.com/NYULibraries/nyulibraries-deploy/blob/development-deploy/lib/nyulibraries/deploy/capistrano/default_recipes.rb)
+This will load the [default attributes](https://github.com/NYULibraries/formaggio/blob/master/lib/formaggio/capistrano/default_attributes.rb),
+with a [default recipe](https://github.com/NYULibraries/formaggio/blob/master/lib/formaggio/capistrano/default_recipes.rb)
 that will use all of the above mentioned capistrano
 recipes with a passenger server. All you have to do is
 
     # In your config/deploy.rb
-    require 'nyulibraries/formaggio/capistrano'
+    require 'formaggio/capistrano'
     set :app_title, "APP_TITLE"
 
 If your app's title is different from the git repo, then you have to also do
 
     # In your config/deploy.rb
-    require 'nyulibraries/formaggio/capistrano'
+    require 'formaggio/capistrano'
     set :app_title, "APP_TITLE"
     set :repository, "git@github.com:GITUSER/REPO_NAME.git"
 
 Optionally, you can define who to send the git diff info to by:
 
     # In your config/deploy.rb
-    require 'nyulibraries/formaggio/capistrano'
+    require 'formaggio/capistrano'
     set :app_title, "APP_TITLE"
     set :repository, "git@github.com:GITUSER/REPO_NAME.git"
     set :recipient, "email" # Has to be email address!
@@ -190,7 +190,7 @@ Optionally, you can define who to send the git diff info to by:
 Finally, you can override any one of the defaults, for example overriding branch:
 
     # In your config/deploy.rb
-    require 'nyulibraries/formaggio/capistrano'
+    require 'formaggio/capistrano'
     set :app_title, "APP_TITLE"
     set :repository, "git@github.com:GITUSER/REPO_NAME.git"
     set :recipient, "email" # Has to be email address!
