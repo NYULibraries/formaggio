@@ -20,3 +20,5 @@ require_relative 'server/passenger'
 require_relative 'tagging'
 # This recipe clears the cache.
 require_relative 'cache'
+# This removes all previous releases
+require_relative 'cleanup'
