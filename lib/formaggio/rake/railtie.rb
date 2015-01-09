@@ -4,6 +4,7 @@ module Formaggio
       rake_tasks do
         load "tasks/puma.rake"
         load "tasks/new_relic.rake"
+        load "tasks/sunspot.rake"
       end
     end
   else
@@ -15,6 +16,7 @@ module Formaggio
           @rake_tasks ||= []
           @rake_tasks << load("tasks/puma.rake")
           @rake_tasks << load("tasks/new_relic.rake")
+          @rake_tasks << load("tasks/sunspot.rake")
           @rake_tasks
         end
       end
