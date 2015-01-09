@@ -22,3 +22,5 @@ require_relative 'tagging'
 require_relative 'cache'
 # This removes all previous releases
 require_relative 'cleanup'
+# Put in the environment marker
+require_relative 'environment'
