@@ -1,4 +1,3 @@
-require 'sunspot'
 namespace :formaggio do
   namespace :sunspot do
 
