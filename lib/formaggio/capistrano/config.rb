@@ -9,18 +9,18 @@ Capistrano::Configuration.instance(:must_exist).load do
   before  "deploy:check",                       "config:see"
   before  "deploy:assets:update_asset_mtimes",  "config:see"
   before  "config:see",                         "figs:load_"
-  
+
   namespace :config do
     # desc "Set stage variables"
     task :set_variables do
       # Configure app_settings from config
       # Defer processing until we have rails environment
-      
+
       set(:app_settings, true)
       set(:scm_username, ENV['DEPLOY_SCM_USERNAME'])
       set(:app_path, ENV['DEPLOY_PATH'])
       set(:user, ENV['DEPLOY_USER'])
-      set(:puma_ports, Figs::ENV.puma_ports)
+      set(:puma_ports, Figs::ENV.puma_ports) if Figs::ENV.puma_ports?
       set(:deploy_to)     {"#{fetch :app_path}#{fetch :application}"}
     end
 
