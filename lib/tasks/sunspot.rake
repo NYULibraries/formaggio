@@ -54,7 +54,9 @@ namespace :formaggio do
           $stderr.puts "Error using progress bar: #{e.message}"
         end unless args[:silence]
 
-        # Finally, invoke the class-level solr_reindex on each model
+        # Finally, invoke the class-level solr_index on each model
+        # Note: Changed this from the default task which reindexes each model,
+        # meaning it deletes the full model and then indexes again.
         sunspot_models.each do |model|
           model.solr_index(reindex_options)
         end
