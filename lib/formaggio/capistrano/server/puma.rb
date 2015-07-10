@@ -1,5 +1,9 @@
 Capistrano::Configuration.instance(:must_exist).load do
   namespace :deploy do
+    def puma_args(port)
+      "#{port}#{fetch(:puma_ssl_enabled, false) ? ",'ssl'" : ""}"
+    end
+    
     desc "Start the application"
     task :start do
       fetch(:puma_ports, [9000]).each do |port|
@@ -19,10 +23,6 @@ Capistrano::Configuration.instance(:must_exist).load do
       fetch(:puma_ports, [9000]).each do |port|
         run "cd #{current_release} && RAILS_ENV=#{fetch(:rails_env, 'staging')} bundle exec rake formaggio:puma:restart[#{puma_args(port)}]"
       end
-    end
-
-    def puma_args(port)
-      "#{port}#{fetch(:puma_ssl_enabled, false) ? ",'ssl'" : ""}"
     end
   end
 end
