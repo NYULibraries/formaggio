@@ -7,7 +7,7 @@ namespace :formaggio do
       else
         ssl_enabled = false
       end
-      Formaggio::PumaManager.start(args[:port], ssl_enabled)
+      Formaggio::PumaManager.start(args[:port], ssl_enabled: ssl_enabled)
     end
 
     desc "Retart the puma web server on the given port"
@@ -17,7 +17,7 @@ namespace :formaggio do
       else
         ssl_enabled = false
       end
-      Formaggio::PumaManager.restart(args[:port], ssl_enabled)
+      Formaggio::PumaManager.restart(args[:port], ssl_enabled: ssl_enabled)
     end
 
     desc "Stop the puma web server on the given port"
@@ -27,7 +27,7 @@ namespace :formaggio do
       else
         ssl_enabled = false
       end
-      Formaggio::PumaManager.stop(args[:port], ssl_enabled)
+      Formaggio::PumaManager.stop(args[:port], ssl_enabled: ssl_enabled)
     end
 
     desc "Write the start and restart scripts to files. Does not overwrite if the files exist"
@@ -37,7 +37,7 @@ namespace :formaggio do
       else
         ssl_enabled = false
       end
-      Formaggio::PumaManager.write_scripts(args[:port], ssl_enabled)
+      Formaggio::PumaManager.write_scripts(args[:port], ssl_enabled: ssl_enabled)
     end
   end
 end
