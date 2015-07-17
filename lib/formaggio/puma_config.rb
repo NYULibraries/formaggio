@@ -37,7 +37,7 @@ module Formaggio
     end
 
     def tcp_uri
-      "'tcp://#{host_ip}#{port}'"
+      "'tcp://#{host_ip}:#{port}'"
     end
 
     def bind
