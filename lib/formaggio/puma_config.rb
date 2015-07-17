@@ -1,6 +1,6 @@
 module Formaggio
   class PumaConfig
-    attr_reader :port, :root, :env, :ssl_enabled, :host_ip
+    attr_reader :port, :root, :env, :ssl_enabled, :host_ip, :keystore, :keystore_pass
 
     def initialize(port, opts = {})
       @port = port
@@ -12,6 +12,8 @@ module Formaggio
       raise RuntimeError.new("You need to tell me the environment of your Puma app") if @env.nil?
       @ssl_enabled = (opts[:ssl_enabled] if opts.has_key?(:ssl_enabled))
       @host_ip = opts.has_key?(:host_ip) ? opts[:host_ip] : "127.0.0.1"
+      @keystore = opts.has_key?(:keystore) ? opts[:keystore] : ENV['KEYSTORE']
+      @keystore_pass = opts.has_key?(:keystore_pass) ? opts[:keystore_pass] : ENV['KEYSTORE_PASS']
     end
 
     def scripts_path
@@ -24,14 +26,6 @@ module Formaggio
 
     def log
       @log ||= "#{root}/log/puma-#{env}-#{port}.log"
-    end
-
-    def keystore
-      ENV['KEYSTORE']
-    end
-
-    def keystore_pass
-      ENV['KEYSTORE_PASS']
     end
 
     def ssl_params
