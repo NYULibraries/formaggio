@@ -6,27 +6,27 @@ module Formaggio
     end
 
     # Start the puma web server on the given port
-    def self.start(port)
+    def self.start(port, opts)
       config = puma_config(port)
       exec config.start_cmd
     end
 
     # Restart the puma web server on the given port
-    def self.restart(port)
+    def self.restart(port, opts)
       config = puma_config(port)
       exec config.restart_cmd
     end
 
     # Stop the puma web server on the given port
-    def self.stop(port)
+    def self.stop(port, opts)
       config = puma_config(port)
       exec config.stop_cmd
     end
 
     # Write the start and restart scripts to files
     # Does not overwrite if the files exist
-    def self.write_scripts(port)
-      config = puma_config(port)
+    def self.write_scripts(port, opts)
+      config = puma_config(port, opts)
       make_scripts_dir(config)
       write_start_script(config)
       write_restart_script(config)

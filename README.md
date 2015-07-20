@@ -30,6 +30,20 @@ Start, stop, and restart tasks for the [Puma webserver](http://puma.io/).
     rake formaggio:puma:restart[9292]
     rake formaggio:puma:stop[9292]
 
+We also have options to start puma on ssl!
+
+    rake formaggio:puma:start[9292,'ssl']
+    rake formaggio:puma:restart[9292,'ssl']
+    rake formaggio:puma:stop[9292,'ssl']
+
+__Note:__ This requires you have a Java Keystore file and pass that contain your certificates. The location can be passed in as environment variables in the command line like so:
+
+    export KEYSTORE='/path/to/keystore'
+    export KEYSTORE_PASS='pass-for-keystore'
+    rake formaggio:puma:start[9292,'ssl']
+
+Check out this [helpful tip](https://coderwall.com/p/psnkyq/converting-a-certificate-chain-and-key-into-a-java-keystore-for-ssl-on-puma-java?p=1&q=author%3Ahab278) for more information on how to get your certificates into a Java keystore.
+
 # Capistrano Recipes
 
 ## Assets
