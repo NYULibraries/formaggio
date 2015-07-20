@@ -42,7 +42,7 @@ __Note:__ This requires you have a Java Keystore file and pass that contain your
     export KEYSTORE_PASS='pass-for-keystore'
     rake formaggio:puma:start[9292,'ssl']
 
-Check out this [helpful tip]() for more information on how to get your certificates into a Java keystore.
+Check out this [helpful tip](https://coderwall.com/p/psnkyq/converting-a-certificate-chain-and-key-into-a-java-keystore-for-ssl-on-puma-java?p=1&q=author%3Ahab278) for more information on how to get your certificates into a Java keystore.
 
 # Capistrano Recipes
 
