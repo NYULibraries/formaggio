@@ -10,11 +10,11 @@ Capistrano::Configuration.instance(:must_exist).load do
   after  'tagging:deploy',  'tagging:send_diff'
 
   namespace :tagging do
-    
+
     def current_tag
       @current_tag ||= fetch(:current_tag, "")
     end
-    
+
     def previous_tag
       @previous_tag ||= fetch(:previous_tag, "")
     end
@@ -30,38 +30,38 @@ Capistrano::Configuration.instance(:must_exist).load do
     def user_email
       @user_email ||= `git config --get user.email`.chomp
     end
-    
+
     def repo_name
       @repo_name ||= "#{fetch(:repository).scan(/:(.*)\.git/).last.first}"
     end
-    
+
     def git_tag_names
       @git_tag_names ||= git.tags.collect {|tag| tag.name}
     end
-    
+
     def tagging_environment?
       return true if fetch(:tagging_environments).nil?
       fetch(:tagging_environments).collect {|environment| environment.to_sym}.include?(fetch(:stage, fetch(:rails_env, :staging)).to_sym)
     end
-    
+
     def current_tag?
       current_tag.empty? || git_tag_names.include?(current_tag)
     end
-    
+
     def previous_tag?
       previous_tag.empty? || git_tag_names.include?(previous_tag)
     end
-    
+
     def git
       git = Git.open(Dir.pwd.to_s)
       git.fetch
       git
     end
-    
+
     def git_io url
       Net::HTTP.post_form(URI.parse("http://git.io/"), {:url => url})['location']
     end
-    
+
     def git_compare
       if current_tag?
         git_link = "https://www.github.com/#{repo_name}/compare/" +(previous_tag? ? "#{previous_tag}" : "#{fetch(:previous_revision, git.log.collect.first(2).last.sha)}") + "...#{current_tag}"
@@ -69,11 +69,11 @@ Capistrano::Configuration.instance(:must_exist).load do
       end
       return "There was a redeployment in #{fetch(:app_title, 'this project')}, however there is nothing to compare."
     end
-    
+
     def mail_setup
       Mail.defaults do
-        delivery_method :smtp, { 
-          :openssl_verify_mode => OpenSSL::SSL::VERIFY_NONE, 
+        delivery_method :smtp, {
+          :openssl_verify_mode => OpenSSL::SSL::VERIFY_NONE,
           :address => 'mail.library.nyu.edu',
           :port => '25',
           :enable_starttls_auto => true
@@ -96,18 +96,18 @@ Capistrano::Configuration.instance(:must_exist).load do
       run_locally "git checkout #{revision}; true"
       run_locally "git reset --hard origin/#{revision}; true"
     end
-    
+
     desc "Create release tag in local and origin repo"
     task :deploy do
       create_tag
     end
-    
+
     desc "Sends git diff"
     task :send_diff do
       if tagging_environment?
         mail_setup
         mail = Mail.new
-        mail[:from]     = 'no-reply@library.nyu.edu'
+        mail[:from]     = fetch(:default_sender, 'no-reply@nyu.edu')
         mail[:body]     = git_compare
         mail[:subject]  = "Recent changes for #{fetch(:app_title, 'this project')}"
         mail[:to]       = fetch(:recipient, "")
