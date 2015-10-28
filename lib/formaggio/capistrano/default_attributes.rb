@@ -29,7 +29,7 @@ Capistrano::Configuration.instance(:must_exist).load do
   _cset(:previous_tag) {"#{fetch :stage}_#{fetch(:releases)[-2]}"}
   _cset :tagging_remote, 'origin'
   _cset :tagging_environments, ["production"]
-  _cset :default_sender, 'no-reply@nyu.edu'
+  _cset :default_sender, 'lib-no-reply@nyu.edu'
 
   # RVM  vars
   _cset :rvm_ruby_string, "ruby-1.9.3-p448"

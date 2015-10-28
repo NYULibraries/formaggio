@@ -107,7 +107,7 @@ Capistrano::Configuration.instance(:must_exist).load do
       if tagging_environment?
         mail_setup
         mail = Mail.new
-        mail[:from]     = fetch(:default_sender, 'no-reply@nyu.edu')
+        mail[:from]     = fetch(:default_sender, 'lib-no-reply@nyu.edu')
         mail[:body]     = git_compare
         mail[:subject]  = "Recent changes for #{fetch(:app_title, 'this project')}"
         mail[:to]       = fetch(:recipient, "")
