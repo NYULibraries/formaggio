@@ -29,7 +29,7 @@ module Formaggio
     end
 
     def ssl_params
-      "?keystore=#{keystore}&keystore-pass=#{keystore_pass}"
+      "?keystore=#{keystore}&keystore-pass=#{keystore_pass}&verify_mode=none"
     end
 
     def ssl_uri
