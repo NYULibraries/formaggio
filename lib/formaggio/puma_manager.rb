@@ -55,7 +55,7 @@ module Formaggio
 
     # Create the scripts directory if necessary
     def self.make_scripts_dir(config)
-      FileUtils.mkdir_p config.scripts_path unless Dir.exists? config.scripts_path
+      FileUtils.mkdir_p config.scripts_path unless Dir.exist? config.scripts_path
     end
   end
 end
