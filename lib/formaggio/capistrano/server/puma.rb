@@ -1,7 +1,7 @@
 Capistrano::Configuration.instance(:must_exist).load do
   namespace :deploy do
     def puma_args(port)
-      "#{port}#{fetch(:puma_ssl_enabled, false) ? ",'ssl'" : ""}"
+      "#{port}#{fetch(:puma_ssl_enabled, false) ? ",'ssl'" : ""},#{fetch(:puma_threads, '2:4')}"
     end
     
     desc "Start the application"
