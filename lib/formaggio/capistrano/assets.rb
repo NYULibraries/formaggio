@@ -13,6 +13,8 @@ Capistrano::Configuration.instance(:must_exist).load do
       desc "Precompiles if assets have been changed"
       task :precompile, :roles => :web, :max_hosts => 1, :except => { :no_release => true } do
         force_compile = fetch(:force_precompile, false)
+        public_path = fetch(:public_path, 'public')
+        assets_path = fetch(:assets_path, 'assets')
         changed_asset_count = 0
         rails_env = "RAILS_ENV=#{fetch(:rails_env, fetch(:stage, fetch(:default_stage, 'staging')))}"
         rails_group = "RAILS_GROUP=assets"
@@ -32,12 +34,12 @@ Capistrano::Configuration.instance(:must_exist).load do
           logger.info "#{changed_asset_count} assets have changed. Pre-compiling"
           run_locally ("bundle exec rake assets:clean #{rails_env}")
           run_locally ("bundle exec rake assets:precompile #{rails_env}")
-          run_locally "cd public && tar -jcf assets.tar.bz2 assets"
-          run "cd #{shared_path} && mv assets/manifest* #{previous_release}/assets_manifest.json || true"
-          run "cd #{shared_path} && rm -rf assets && mkdir assets"
-          top.upload "public/assets.tar.bz2", "#{shared_path}", :via => :scp
+          run_locally "cd #{public_path} && tar -jcf assets.tar.bz2 #{assets_path}"
+          run "cd #{shared_path} && mv #{assets_path}/manifest* #{previous_release}/assets_manifest.json || true"
+          run "cd #{shared_path} && rm -rf #{assets_path} && mkdir -p #{assets_path}"
+          top.upload "#{public_path}/assets.tar.bz2", "#{shared_path}", :via => :scp
           run "cd #{shared_path} && tar -jxf assets.tar.bz2 && rm assets.tar.bz2"
-          run_locally "rm public/assets.tar.bz2"
+          run_locally "rm #{public_path}/assets.tar.bz2"
           run_locally("bundle exec rake assets:clean #{rails_env}")
         else
           logger.info "#{changed_asset_count} assets have changed. Skipping asset pre-compilation"
