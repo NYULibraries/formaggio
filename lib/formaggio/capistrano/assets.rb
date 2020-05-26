@@ -48,10 +48,12 @@ Capistrano::Configuration.instance(:must_exist).load do
 
       desc "Creates a symlink for assets"
       task :symlink, roles: :web do
-        run ("rm -rf #{fetch :current_release}/public/assets &&
-              mkdir -p #{fetch :current_release}/public &&
-              mkdir -p #{fetch :shared_path}/assets &&
-              ln -s #{fetch :shared_path}/assets #{fetch :current_release}/public/assets")
+        public_path = fetch(:public_path, 'public')
+        assets_path = fetch(:assets_path, 'assets')
+        run ("rm -rf #{fetch :current_release}/#{public_path}/#{assets_path} &&
+              mkdir -p #{fetch :current_release}/#{public_path} &&
+              mkdir -p #{fetch :shared_path}/#{assets_path} &&
+              ln -s #{fetch :shared_path}/#{assets_path} #{fetch :current_release}/#{public_path}/#{assets_path}")
       end
     end
   end
